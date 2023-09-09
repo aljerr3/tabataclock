@@ -135,7 +135,7 @@ function Timer({ time, isResting, cycle, totalCycles }) {
       <p>
         Ciclo {cycle} de {totalCycles}
       </p>
-      <p className="segs">00:{time} </p>
+      <p className="segs">{time} </p>
     </div>
   );
 }
