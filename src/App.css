@@ -10,6 +10,7 @@
 }
 
 .timer {
+  margin-top: calc(100vh/10);
   text-align: center;
   color:white;
   font-size: calc(100vh/35);
@@ -201,7 +202,7 @@ label {
 
 .referidos{
   color: rgb(6, 0, 32);
-  background-color: white;
+  background-color: #B4CED9;
   height: 100%;
   width: 100%;
   font-size: calc(100vh/60);
