@@ -6,12 +6,13 @@
   color: white;
   transition: background-color 0.5s ease-in-out 0s;
   box-sizing: border-box;
-  padding-top: env(safe-area-inset-top);}
+  padding: 0px;
+}
 
 .timer {
   text-align: center;
   color:white;
-  font-size: calc(100vh/30);
+  font-size: calc(100vh/35);
 }
 
 .timer .working {
@@ -91,6 +92,7 @@ body, html {
   overflow: hidden;
   font-family: 'Kdam Thmor Pro', sans-serif;
   background-color: rgb(12 15 42);
+  overflow-y: scroll;
 }
 
 .tabata-container {
@@ -195,4 +197,14 @@ label {
 
 .config-container.open {
   margin-top: -50vh; /* Puedes ajustar este valor según lo que necesites */
+}
+
+.referidos{
+  color: rgb(6, 0, 32);
+  background-color: white;
+  height: 100%;
+  width: 100%;
+  font-size: calc(100vh/60);
+  text-align: center;
+  margin-top: calc(100vh/10);
 }
