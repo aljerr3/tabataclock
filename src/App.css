@@ -145,9 +145,24 @@ body, html {
   color: rgb(255, 255, 255);
 }
 
+.inputConfig{
+  width: calc(100vh/10);
+  height: calc(100vh/30);
+  border-radius: 5px;
+  border: none;
+  text-align: center;
+  font-size: calc(100vh/40);
+  margin: calc(100vh/90);
+  float: left;
+}
+
 
 label {
   margin: calc(100vh/90) 0;
+  position: relative;
+  justify-self: center;
+  text-align: center;
+  font-size: calc(100vh/30);
 }
 
 .segs{

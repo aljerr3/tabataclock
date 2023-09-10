@@ -14,7 +14,7 @@ function TabataTimer() {
   const [isActive, setIsActive] = useState(false);
   const [isCountdownActive, setIsCountdownActive] = useState(false);
   const [isResting, setIsResting] = useState(false);
-  const [isConfigOpen, setIsConfigOpen] = useState(false);
+  const [isConfigOpen, setIsConfigOpen] = useState(true);
   const [tempWorkTime, setTempWorkTime] = useState(20);
   const [tempRestTime, setTempRestTime] = useState(10);
   const [tempTotalCycles, setTempTotalCycles] = useState(8);
@@ -70,6 +70,7 @@ function TabataTimer() {
   function startTimer() {
     setIsCountdownActive(true);
     setIsActive(false);
+    toggleConfig();
   }
 
   function toggleConfig() {
@@ -186,24 +187,27 @@ function ConfigPanel({ workTime, setWorkTime, restTime, setRestTime, totalCycles
   return (
     <div className="config-container">
       <label className="lbl">
-        Ejercicio:
+        Ejercicio
         <input
+        className="inputConfig"
           type="number"
           value={workTime}
           onChange={(e) => setWorkTime(Number(e.target.value))}
         />
       </label>
       <label className="lbl">        
-      Descanso:
+      Descanso
         <input
+         className="inputConfig"
           type="number"
           value={restTime}
           onChange={(e) => setRestTime(Number(e.target.value))}
         />
       </label>
       <label className="lbl">        
-      Ciclos:
+      Ciclos
         <input
+        className="inputConfig"
           type="number"
           value={totalCycles}
           onChange={(e) => setTotalCycles(Number(e.target.value))}
