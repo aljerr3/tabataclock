@@ -77,7 +77,7 @@
   transition: background-color 0.3s;
   border-radius: calc(100vh/100);
   font-size: calc(100vh/60);
-  margin-bottom: calc(100vh/20);
+  margin-bottom: calc(100vh/7);
 }
 
 .reset-button:hover {
