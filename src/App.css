@@ -21,7 +21,7 @@
 }
 
 .timer .resting {
-  color: rgb(202, 0, 67);
+  color: rgb(255, 255, 255);
 }
 
 .controls {
@@ -207,5 +207,4 @@ label {
   width: 100%;
   font-size: calc(100vh/60);
   text-align: center;
-  margin-top: calc(100vh/10);
 }

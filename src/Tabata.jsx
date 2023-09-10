@@ -70,7 +70,10 @@ function TabataTimer() {
   function startTimer() {
     setIsCountdownActive(true);
     setIsActive(false);
-    toggleConfig();
+    if (isConfigOpen){
+        toggleConfig();
+
+    }
   }
 
   function toggleConfig() {
