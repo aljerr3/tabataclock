@@ -27,9 +27,9 @@
 }
 
 .start-button {
-  background-color: rgb(5, 61, 5);
+  background-color: #370fe907;
   color: white;
-  border: none;
+  border: 2px solid white;
   padding: calc(100vh/60);
   margin: calc(100vh/90);
   cursor: pointer;
@@ -43,9 +43,9 @@
 }
 
 .reset-button {
-  background-color: purple;
+  background-color: #370fe907;
   color: white;
-  border: none;
+  border: 2px solid white;
   padding: calc(100vh/60);
   margin: calc(100vh/90);
   cursor: pointer;
@@ -55,9 +55,9 @@
 }
 
 .btnPause{
-  background-color: #e9e50f;
+  background-color: #370fe907;
   color: white;
-  border: none;
+  border: 2px solid white;
   padding: calc(100vh/60);
   margin: calc(100vh/90);
   cursor: pointer;
@@ -68,15 +68,16 @@
 
 
 .configBtn{
-  background-color: #370fe9;
+  background-color: #370fe907;
   color: white;
-  border: none;
+  border: 2px solid white;
   padding: calc(100vh/60);
   margin: calc(100vh/90);
   cursor: pointer;
   transition: background-color 0.3s;
   border-radius: calc(100vh/100);
   font-size: calc(100vh/60);
+  margin-bottom: 100px;
 }
 
 .reset-button:hover {
