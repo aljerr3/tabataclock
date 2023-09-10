@@ -5,13 +5,11 @@
   width: 100%;
   color: white;
   transition: background-color 0.5s ease-in-out 0s;
-  padding-bottom: 12px;
   box-sizing: border-box;
   padding-top: env(safe-area-inset-top);}
 
 .timer {
   text-align: center;
-  margin-bottom: 20px;
   color:white;
   font-size: calc(100vh/30);
 }
@@ -29,11 +27,11 @@
 }
 
 .start-button {
-  background-color: green;
+  background-color: rgb(5, 61, 5);
   color: white;
   border: none;
   padding: 10px 20px;
-  margin-right: 10px;
+  margin: calc(100vh/90);
   cursor: pointer;
   transition: background-color 0.3s;
 }
@@ -47,6 +45,28 @@
   color: white;
   border: none;
   padding: 10px 20px;
+  margin: calc(100vh/90);
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btnPause{
+  background-color: #e9e50f;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: calc(100vh/90);
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+
+.configBtn{
+  background-color: #370fe9;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: calc(100vh/90);
   cursor: pointer;
   transition: background-color 0.3s;
 }
@@ -58,9 +78,10 @@
 body, html {
   height: 100%;
   margin: 0;
+  padding: auto;
   overflow: hidden;
-  font-family: 'Orbitron', sans-serif;
-  background-color: rgb(218, 218, 218);
+  font-family: 'Kdam Thmor Pro', sans-serif;
+  background-color: rgb(12 15 42);
 }
 
 .tabata-container {
@@ -74,9 +95,10 @@ body, html {
   left: 0;
   top: 0;
   height: 100vh;
-  transition: width 0.3s linear;
+  transition: all 0.3s linear;
   z-index: 1;
 }
+
 
 .tabata-content {
   position: absolute;
@@ -99,41 +121,39 @@ body, html {
   background-color: rgb(138, 56, 56);  /* Color de descanso */
 }
 
-.btnPause{
-  background-color: #e9e50f;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  margin-right: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
 
-
-.configBtn{
-  background-color: #370fe9;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  margin-right: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
 
 .config-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300px;  
+  height: 200px;
+  transform: translate(-50%, -50%);  
+  z-index: 3; 
+  background-color: rgba(0, 0, 0, 0.7);  
+  border-radius: 10px;  
+  padding: 20px; 
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5); 
 }
 
+.lbl{
+  color: rgb(255, 255, 255);
+}
+
+
 label {
-  margin: 10px 0;
+  margin: calc(100vh/90) 0;
 }
 
 .segs{
   font-size: calc(100vh/6);
   color: white;
+
 }
 
 .fullscreen-icon {
@@ -143,4 +163,12 @@ label {
   cursor: pointer;
   font-size: 24px;
   z-index: 1000; /* Asegúrate de que esté por encima de otros elementos */
+}
+
+.countdown {
+  background-color: rgb(224, 224, 44);
+}
+
+.config-container.open {
+  margin-top: -50vh; /* Puedes ajustar este valor según lo que necesites */
 }
