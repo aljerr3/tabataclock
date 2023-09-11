@@ -29,8 +29,8 @@ function TabataTimer() {
     if (isCountdownActive) {
       interval = setInterval(() => {
         if (countdownTime > 0) {
-          setCountdownTime((prevTime) => prevTime - 1);
-          start.play();
+          setCountdownTime(prevTime => prevTime - 1);
+          ding.play(); // Reproduce el sonido
         } else {
           setIsCountdownActive(false);
           setIsActive(true);
@@ -40,24 +40,28 @@ function TabataTimer() {
     } else if (isActive) {
       interval = setInterval(() => {
         if (currentTime > 0) {
-          setCurrentTime((prevTime) => prevTime - 1);
+          setCurrentTime(prevTime => prevTime - 1);
+
+          if (isResting && currentTime <= 3) {
+            ding.play();
+          }
+          if (!isResting  && currentTime <= 3) {
+            ding.play();
+          }
         } else {
           if (currentCycle === totalCycles && isResting) {
             setIsActive(false);
-            ding.play();
+            start.play();
             setCurrentCycle(1);
             setIsResting(false);
             setCurrentTime(workTime);
           } else if (isResting) {
-            setCurrentCycle((prevCycle) => {
-              setIsCountdownActive(true);
-              setIsActive(false);
-              return prevCycle + 1;
-            });
-            ding.play();
+            setCurrentCycle(prevCycle => prevCycle + 1);
+            start.play(); // Reproduce el sonido
             setIsResting(false);
             setCurrentTime(workTime);
           } else {
+            start.play(); // Reproduce el sonido
             setIsResting(true);
             setCurrentTime(restTime);
           }
@@ -66,17 +70,7 @@ function TabataTimer() {
     }
 
     return () => clearInterval(interval);
-  }, [
-    isActive,
-    isCountdownActive,
-    countdownTime,
-    currentTime,
-    currentCycle,
-    isResting,
-    workTime,
-    restTime,
-    totalCycles,
-  ]);
+  }, [isActive, isCountdownActive, countdownTime, currentTime, currentCycle, isResting, workTime, restTime, totalCycles]);
 
   function startTimer() {
     setIsCountdownActive(true);
@@ -96,13 +90,7 @@ function TabataTimer() {
     setIsConfigOpen(!isConfigOpen);
   }
 
-  function ProgressBar({
-    children,
-    currentTime,
-    totalTime,
-    isResting,
-    isCountdown,
-  }) {
+  function ProgressBar({ children, currentTime, totalTime, isResting, isCountdown }) {
     const percentage = 100 - (currentTime / totalTime) * 100;
     const progressBarClass = isCountdown
       ? "countdown"
@@ -124,7 +112,7 @@ function TabataTimer() {
   return (
     <ProgressBar
       currentTime={isCountdownActive ? countdownTime : currentTime}
-      totalTime={isCountdownActive ? 3 : isResting ? restTime : workTime}
+      totalTime={isCountdownActive ? 3 : (isResting ? restTime : workTime)}
       isResting={isResting}
       isCountdown={isCountdownActive}
     >
@@ -134,6 +122,7 @@ function TabataTimer() {
         cycle={currentCycle}
         totalCycles={totalCycles}
       />
+
       <Controls
         isActive={isActive}
         start={startTimer}
@@ -183,7 +172,7 @@ function Controls({ isActive, start, pause, reset }) {
     <div className="controls">
       {!isActive ? (
         <button className="start-button" onClick={start}>
-          <FontAwesomeIcon icon={faPlay} /> Iniciar
+          <FontAwesomeIcon icon={faPlay} />  Iniciar
         </button>
       ) : (
         <button className="btnPause" onClick={pause}>
@@ -191,21 +180,14 @@ function Controls({ isActive, start, pause, reset }) {
         </button>
       )}
       <button className="reset-button" onClick={reset}>
-        <FontAwesomeIcon icon={faArrowsSpin} />
+        <FontAwesomeIcon icon={faArrowsSpin} /> 
         Reiniciar
       </button>
     </div>
   );
 }
 
-function ConfigPanel({
-  workTime,
-  setWorkTime,
-  restTime,
-  setRestTime,
-  totalCycles,
-  setTotalCycles,
-}) {
+function ConfigPanel({ workTime, setWorkTime, restTime, setRestTime, totalCycles, setTotalCycles }) {
   return (
     <div className="config-container">
       <label className="lbl">
@@ -217,8 +199,8 @@ function ConfigPanel({
           onChange={(e) => setWorkTime(Number(e.target.value))}
         />
       </label>
-      <label className="lbl">
-        Descanso
+      <label className="lbl">        
+      Descanso
         <input
           className="inputConfig"
           type="number"
@@ -226,8 +208,8 @@ function ConfigPanel({
           onChange={(e) => setRestTime(Number(e.target.value))}
         />
       </label>
-      <label className="lbl">
-        Ciclos
+      <label className="lbl">        
+      Ciclos
         <input
           className="inputConfig"
           type="number"
