@@ -228,9 +228,11 @@ label {
 }
 
 .seo{
-  background-color: white;
-  color: black;
+  background-color: rgb(216, 223, 228);
+  color: rgb(80, 80, 80);
   text-align: center;
   padding: 2rem;
   justify-content: center;
+  font-weight: 100;
+  font-size: 14px;
 }

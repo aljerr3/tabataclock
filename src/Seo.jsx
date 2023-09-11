@@ -17,20 +17,6 @@ function Seo() {
 
     </div>
 
-    <div className="seo">
-    Ya sea que estés en casa, en el gimnasio o
-      al aire libre, nuestro reloj se adaptará a tus necesidades, asegurando que
-      saques el máximo provecho de cada sesión. Características principales:
-      Interfaz amigable: Nuestro diseño es claro y fácil de seguir, incluso en
-      medio de los ejercicios más intensos. Personalización: Ajusta los tiempos
-      según tus necesidades o sigue el formato clásico de Tabata. Alarmas y
-      sonidos: Recibe alertas audibles para saber cuándo comenzar y cuándo
-      descansar. No esperes más y comienza a experimentar los beneficios del
-      entrenamiento Tabata con la ayuda de [nombre de tu sitio web]. Recuerda,
-      la constancia es la clave para obtener resultados. ¡Comienza tu
-      transformación hoy!
-    </div>
-
     </div>
   );
 }
