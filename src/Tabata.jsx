@@ -135,7 +135,7 @@ function TabataTimer() {
       />
       <button className="configBtn" onClick={toggleConfig}>
         <FontAwesomeIcon icon={faGear} />
-        {isConfigOpen ? "Guardar" : ""}
+        {isConfigOpen ? "Guardar" : "Configurar"}
       </button>
       {isConfigOpen && (
         <ConfigPanel
