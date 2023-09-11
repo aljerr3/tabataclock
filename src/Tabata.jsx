@@ -195,17 +195,16 @@ function ConfigPanel({ workTime, setWorkTime, restTime, setRestTime, totalCycles
         <input
           className="inputConfig"
           type="number"
-          value={workTime}
-          onChange={(e) => setWorkTime(Number(e.target.value))}
-        />
+          defaultValue={workTime} // Usamos defaultValue en lugar de value
+          onBlur={(e) => setWorkTime(Number(e.target.value))}        />
       </label>
       <label className="lbl">        
       Descanso
         <input
           className="inputConfig"
           type="number"
-          value={restTime}
-          onChange={(e) => setRestTime(Number(e.target.value))}
+          defaultValue={restTime} // Usamos defaultValue en lugar de value
+          onBlur={(e) => setRestTime(Number(e.target.value))}
         />
       </label>
       <label className="lbl">        
@@ -213,8 +212,8 @@ function ConfigPanel({ workTime, setWorkTime, restTime, setRestTime, totalCycles
         <input
           className="inputConfig"
           type="number"
-          value={totalCycles}
-          onChange={(e) => setTotalCycles(Number(e.target.value))}
+          defaultValue={totalCycles} // Usamos defaultValue en lugar de value
+          onBlur={(e) => setTotalCycles(Number(e.target.value))}
         />
       </label>
     </div>
