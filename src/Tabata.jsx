@@ -6,7 +6,6 @@ import { faGear } from "@fortawesome/free-solid-svg-icons";
 import dingSound from "./resources/ding.mp3";
 import startSound from "./resources/start.mp3";
 
-
 function TabataTimer() {
   const [currentTime, setCurrentTime] = useState(20);
   const [countdownTime, setCountdownTime] = useState(3);
@@ -24,16 +23,14 @@ function TabataTimer() {
   const ding = new Audio(dingSound);
   const start = new Audio(startSound);
 
-
   useEffect(() => {
     let interval;
 
     if (isCountdownActive) {
       interval = setInterval(() => {
         if (countdownTime > 0) {
-          setCountdownTime(prevTime => prevTime - 1);
-          start.play();  // Reproduce el sonido
-
+          setCountdownTime((prevTime) => prevTime - 1);
+          start.play();
         } else {
           setIsCountdownActive(false);
           setIsActive(true);
@@ -43,7 +40,7 @@ function TabataTimer() {
     } else if (isActive) {
       interval = setInterval(() => {
         if (currentTime > 0) {
-          setCurrentTime(prevTime => prevTime - 1);
+          setCurrentTime((prevTime) => prevTime - 1);
         } else {
           if (currentCycle === totalCycles && isResting) {
             setIsActive(false);
@@ -52,8 +49,12 @@ function TabataTimer() {
             setIsResting(false);
             setCurrentTime(workTime);
           } else if (isResting) {
-            setCurrentCycle(prevCycle => prevCycle + 1);
-            ding.play();  // Reproduce el sonido
+            setCurrentCycle((prevCycle) => {
+              setIsCountdownActive(true);
+              setIsActive(false);
+              return prevCycle + 1;
+            });
+            ding.play();
             setIsResting(false);
             setCurrentTime(workTime);
           } else {
@@ -65,14 +66,23 @@ function TabataTimer() {
     }
 
     return () => clearInterval(interval);
-  }, [isActive, isCountdownActive, countdownTime, currentTime, currentCycle, isResting, workTime, restTime, totalCycles]);
+  }, [
+    isActive,
+    isCountdownActive,
+    countdownTime,
+    currentTime,
+    currentCycle,
+    isResting,
+    workTime,
+    restTime,
+    totalCycles,
+  ]);
 
   function startTimer() {
     setIsCountdownActive(true);
     setIsActive(false);
-    if (isConfigOpen){
-        toggleConfig();
-
+    if (isConfigOpen) {
+      toggleConfig();
     }
   }
 
@@ -86,12 +96,18 @@ function TabataTimer() {
     setIsConfigOpen(!isConfigOpen);
   }
 
-  function ProgressBar({ children, currentTime, totalTime, isResting, isCountdown }) {
+  function ProgressBar({
+    children,
+    currentTime,
+    totalTime,
+    isResting,
+    isCountdown,
+  }) {
     const percentage = 100 - (currentTime / totalTime) * 100;
-    const progressBarClass = isCountdown 
-      ? "countdown" 
-      : isResting 
-      ? "resting" 
+    const progressBarClass = isCountdown
+      ? "countdown"
+      : isResting
+      ? "resting"
       : "working";
 
     return (
@@ -108,7 +124,7 @@ function TabataTimer() {
   return (
     <ProgressBar
       currentTime={isCountdownActive ? countdownTime : currentTime}
-      totalTime={isCountdownActive ? 3 : (isResting ? restTime : workTime)}
+      totalTime={isCountdownActive ? 3 : isResting ? restTime : workTime}
       isResting={isResting}
       isCountdown={isCountdownActive}
     >
@@ -118,7 +134,6 @@ function TabataTimer() {
         cycle={currentCycle}
         totalCycles={totalCycles}
       />
-
       <Controls
         isActive={isActive}
         start={startTimer}
@@ -131,7 +146,6 @@ function TabataTimer() {
         }}
       />
       <button className="configBtn" onClick={toggleConfig}>
-        
         <FontAwesomeIcon icon={faGear} />
         {isConfigOpen ? "Guardar" : "Configurar"}
       </button>
@@ -169,7 +183,7 @@ function Controls({ isActive, start, pause, reset }) {
     <div className="controls">
       {!isActive ? (
         <button className="start-button" onClick={start}>
-          <FontAwesomeIcon icon={faPlay} />  Iniciar
+          <FontAwesomeIcon icon={faPlay} /> Iniciar
         </button>
       ) : (
         <button className="btnPause" onClick={pause}>
@@ -177,40 +191,45 @@ function Controls({ isActive, start, pause, reset }) {
         </button>
       )}
       <button className="reset-button" onClick={reset}>
-        <FontAwesomeIcon icon={faArrowsSpin} /> 
+        <FontAwesomeIcon icon={faArrowsSpin} />
         Reiniciar
-        
       </button>
-      
     </div>
   );
 }
 
-function ConfigPanel({ workTime, setWorkTime, restTime, setRestTime, totalCycles, setTotalCycles }) {
+function ConfigPanel({
+  workTime,
+  setWorkTime,
+  restTime,
+  setRestTime,
+  totalCycles,
+  setTotalCycles,
+}) {
   return (
     <div className="config-container">
       <label className="lbl">
         Ejercicio
         <input
-        className="inputConfig"
+          className="inputConfig"
           type="number"
           value={workTime}
           onChange={(e) => setWorkTime(Number(e.target.value))}
         />
       </label>
-      <label className="lbl">        
-      Descanso
+      <label className="lbl">
+        Descanso
         <input
-         className="inputConfig"
+          className="inputConfig"
           type="number"
           value={restTime}
           onChange={(e) => setRestTime(Number(e.target.value))}
         />
       </label>
-      <label className="lbl">        
-      Ciclos
+      <label className="lbl">
+        Ciclos
         <input
-        className="inputConfig"
+          className="inputConfig"
           type="number"
           value={totalCycles}
           onChange={(e) => setTotalCycles(Number(e.target.value))}
