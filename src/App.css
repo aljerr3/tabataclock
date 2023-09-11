@@ -91,7 +91,7 @@
 body, html {
   height: 100%;
   margin: 0;
-  padding: auto;
+  padding: 0;
   overflow: hidden;
   font-family: 'Kdam Thmor Pro', sans-serif;
   background-color: rgb(12 15 42);

@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlay } from "@fortawesome/free-solid-svg-icons";
-import { faArrowsSpin } from "@fortawesome/free-solid-svg-icons";
-import { faGear } from "@fortawesome/free-solid-svg-icons";
+import { faPlay, faArrowsSpin, faGear, faVolumeUp, faVolumeMute } from "@fortawesome/free-solid-svg-icons";
 import dingSound from "./resources/ding.mp3";
 import startSound from "./resources/start.mp3";
 
@@ -20,6 +18,8 @@ function TabataTimer() {
   const [workTime, setWorkTime] = useState(20);
   const [restTime, setRestTime] = useState(10);
   const [totalCycles, setTotalCycles] = useState(8);
+  const [soundEnabled, setSoundEnabled] = useState(true); // Nuevo estado para el sonido
+  
   const ding = new Audio(dingSound);
   const start = new Audio(startSound);
 
@@ -30,7 +30,7 @@ function TabataTimer() {
       interval = setInterval(() => {
         if (countdownTime > 0) {
           setCountdownTime(prevTime => prevTime - 1);
-          ding.play(); // Reproduce el sonido
+          if (soundEnabled) ding.play();
         } else {
           setIsCountdownActive(false);
           setIsActive(true);
@@ -42,26 +42,26 @@ function TabataTimer() {
         if (currentTime > 0) {
           setCurrentTime(prevTime => prevTime - 1);
 
-          if (isResting && currentTime <= 3) {
+          if (isResting && currentTime <= 3 && soundEnabled) {
             ding.play();
           }
-          if (!isResting  && currentTime <= 3) {
+          if (!isResting  && currentTime <= 3 && soundEnabled) {
             ding.play();
           }
         } else {
           if (currentCycle === totalCycles && isResting) {
+            if (soundEnabled) start.play();
             setIsActive(false);
-            start.play();
             setCurrentCycle(1);
             setIsResting(false);
             setCurrentTime(workTime);
           } else if (isResting) {
+            if (soundEnabled) start.play();
             setCurrentCycle(prevCycle => prevCycle + 1);
-            start.play(); // Reproduce el sonido
             setIsResting(false);
             setCurrentTime(workTime);
           } else {
-            start.play(); // Reproduce el sonido
+            if (soundEnabled) start.play();
             setIsResting(true);
             setCurrentTime(restTime);
           }
@@ -70,7 +70,7 @@ function TabataTimer() {
     }
 
     return () => clearInterval(interval);
-  }, [isActive, isCountdownActive, countdownTime, currentTime, currentCycle, isResting, workTime, restTime, totalCycles]);
+  }, [isActive, isCountdownActive, countdownTime, currentTime, currentCycle, isResting, workTime, restTime, totalCycles, soundEnabled]);
 
   function startTimer() {
     setIsCountdownActive(true);
@@ -148,6 +148,10 @@ function TabataTimer() {
           setTotalCycles={setTempTotalCycles}
         />
       )}
+      <button className="soundBtn" onClick={() => setSoundEnabled(!soundEnabled)}>
+        <FontAwesomeIcon icon={soundEnabled ? faVolumeUp : faVolumeMute} />
+        {soundEnabled ? "Desactivar hijueputa Sonido" : "Activar hijueputa Sonido"}
+      </button>
       <FullScreenToggle />
     </ProgressBar>
   );
@@ -195,15 +199,16 @@ function ConfigPanel({ workTime, setWorkTime, restTime, setRestTime, totalCycles
         <input
           className="inputConfig"
           type="number"
-          defaultValue={workTime} // Usamos defaultValue en lugar de value
-          onBlur={(e) => setWorkTime(Number(e.target.value))}        />
+          defaultValue={workTime}
+          onBlur={(e) => setWorkTime(Number(e.target.value))}
+        />
       </label>
       <label className="lbl">        
       Descanso
         <input
           className="inputConfig"
           type="number"
-          defaultValue={restTime} // Usamos defaultValue en lugar de value
+          defaultValue={restTime}
           onBlur={(e) => setRestTime(Number(e.target.value))}
         />
       </label>
@@ -212,7 +217,7 @@ function ConfigPanel({ workTime, setWorkTime, restTime, setRestTime, totalCycles
         <input
           className="inputConfig"
           type="number"
-          defaultValue={totalCycles} // Usamos defaultValue en lugar de value
+          defaultValue={totalCycles}
           onBlur={(e) => setTotalCycles(Number(e.target.value))}
         />
       </label>
