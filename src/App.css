@@ -225,6 +225,32 @@ label {
   width: 100%;
   font-size: calc(100vh/60);
   text-align: center;
+  padding: 1rem;
+
+}
+
+.referidosRow{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.card{
+  border-radius: 10px;
+  padding: 1rem;
+  background-color: #b3a2ff6b;
+  color: white;
+  margin: 2px;
+  box-sizing: border-box;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+
+}
+.card:hover{
+  background-color: #b3a2ff;
+  color: white;
+  margin: 2px;
 }
 
 .seo{
