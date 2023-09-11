@@ -2,7 +2,7 @@ import React from 'react'
 
 function Footer() {
   return (
-    <div className='footer'>Creado por Alfredo Pérez 2023, casi todos los derechos reservados</div>
+    <div className='footer'>Creado por Alfredo Pérez 2023, 20% de los derechos reservados</div>
   )
 }
 
