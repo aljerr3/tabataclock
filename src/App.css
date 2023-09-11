@@ -10,7 +10,7 @@
 }
 
 .timer {
-  margin-top: calc(100vh/10);
+  margin-top: calc(100vh/200);
   text-align: center;
   color:white;
   font-size: calc(100vh/35);

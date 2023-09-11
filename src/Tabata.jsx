@@ -153,9 +153,9 @@ function TabataTimer() {
 function Timer({ time, isResting, cycle, totalCycles }) {
   return (
     <div className="timer">
-      <h1 className={isResting ? "resting" : "working"}>
+      <h2 className={isResting ? "resting" : "working"}>
         {isResting ? "Descanso" : "Ejercicio"}
-      </h1>
+      </h2>
       <p>
         {cycle} de {totalCycles}
       </p>
