@@ -18,7 +18,7 @@ function TabataTimer() {
   const [workTime, setWorkTime] = useState(20);
   const [restTime, setRestTime] = useState(10);
   const [totalCycles, setTotalCycles] = useState(8);
-  const [soundEnabled, setSoundEnabled] = useState(true); // Nuevo estado para el sonido
+  const [soundEnabled, setSoundEnabled] = useState(true);
   
   const ding = new Audio(dingSound);
   const start = new Audio(startSound);
@@ -122,7 +122,6 @@ function TabataTimer() {
         cycle={currentCycle}
         totalCycles={totalCycles}
       />
-
       <Controls
         isActive={isActive}
         start={startTimer}
@@ -146,12 +145,10 @@ function TabataTimer() {
           setRestTime={setTempRestTime}
           totalCycles={tempTotalCycles}
           setTotalCycles={setTempTotalCycles}
+          soundEnabled={soundEnabled}
+          setSoundEnabled={setSoundEnabled}
         />
       )}
-      <button className="soundBtn" onClick={() => setSoundEnabled(!soundEnabled)}>
-        <FontAwesomeIcon icon={soundEnabled ? faVolumeUp : faVolumeMute} />
-        {soundEnabled ? "Desactivar hijueputa Sonido" : "Activar hijueputa Sonido"}
-      </button>
       <FullScreenToggle />
     </ProgressBar>
   );
@@ -191,7 +188,7 @@ function Controls({ isActive, start, pause, reset }) {
   );
 }
 
-function ConfigPanel({ workTime, setWorkTime, restTime, setRestTime, totalCycles, setTotalCycles }) {
+function ConfigPanel({ workTime, setWorkTime, restTime, setRestTime, totalCycles, setTotalCycles, soundEnabled, setSoundEnabled }) {
   return (
     <div className="config-container">
       <label className="lbl">
@@ -221,6 +218,10 @@ function ConfigPanel({ workTime, setWorkTime, restTime, setRestTime, totalCycles
           onBlur={(e) => setTotalCycles(Number(e.target.value))}
         />
       </label>
+      <button className="soundBtn" onClick={() => setSoundEnabled(!soundEnabled)}>
+        <FontAwesomeIcon icon={soundEnabled ? faVolumeUp : faVolumeMute} />
+        {soundEnabled ? "Desactivar Sonido" : "Activar Sonido"}
+      </button>
     </div>
   );
 }
