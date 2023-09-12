@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlay, faArrowsSpin, faGear, faVolumeUp, faVolumeMute } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPlay,
+  faArrowsSpin,
+  faGear,
+  faVolumeUp,
+  faVolumeMute,
+} from "@fortawesome/free-solid-svg-icons";
 import dingSound from "./resources/ding.mp3";
 import startSound from "./resources/start.mp3";
+import finishSound from "./resources/finish.mp3";
 
 function TabataTimer() {
   const [currentTime, setCurrentTime] = useState(20);
-  const [countdownTime, setCountdownTime] = useState(3);
+  const [countdownTime, setCountdownTime] = useState(10);
   const [currentCycle, setCurrentCycle] = useState(1);
   const [isActive, setIsActive] = useState(false);
   const [isCountdownActive, setIsCountdownActive] = useState(false);
@@ -27,6 +34,7 @@ function TabataTimer() {
 
   const ding = new Audio(dingSound);
   const start = new Audio(startSound);
+  const finish = new Audio(finishSound);
 
   useEffect(() => {
     let interval;
@@ -34,7 +42,7 @@ function TabataTimer() {
     if (isCountdownActive) {
       interval = setInterval(() => {
         if (countdownTime > 0) {
-          setCountdownTime(prevTime => prevTime - 1);
+          setCountdownTime((prevTime) => prevTime - 1);
           if (soundEnabled) ding.play();
         } else {
           setIsCountdownActive(false);
@@ -42,53 +50,72 @@ function TabataTimer() {
           setCountdownTime(10);
         }
       }, 1000);
-    }         else if (isActive) {
-        interval = setInterval(() => {
-            if (currentTime > 0) {
-                setCurrentTime(prevTime => prevTime - 1);
+    } else if (isActive) {
+      interval = setInterval(() => {
+        if (currentTime > 0) {
+          setCurrentTime((prevTime) => prevTime - 1);
 
-                if (isResting && currentTime <= 3 && soundEnabled) {
-                    ding.play();
-                }
-                if (!isResting && currentTime <= 3 && soundEnabled) {
-                    ding.play();
-                }
+          if (isResting && currentTime <= 3 && soundEnabled) {
+            ding.play();
+          }
+          if (!isResting && currentTime <= 3 && soundEnabled) {
+            ding.play();
+          }
+        } else {
+          if (currentCycle === totalCycles) {
+            if (isResting) {
+              if (currentTabataCycle < tabataCycles) {
+                // Si no es la última ronda de Tabata, inicia un nuevo ciclo de ejercicio
+                setCurrentCycle(1);
+                setIsResting(false);
+                setCurrentTime(workTime);
+                setCurrentTabataCycle((prevCycle) => prevCycle + 1);
+              } else {
+                // Si es la última ronda de Tabata, detén el temporizador
+                setIsActive(false);
+              }
             } else {
-                if (currentCycle === totalCycles) {
-                    if (isResting) {
-                        // Si estamos en el último ciclo y es un descanso, detenemos el temporizador
-                        setIsActive(false);
-                        setCurrentCycle(1);
-                        setIsResting(false);
-                        setCurrentTime(workTime);
-                        if (currentTabataCycle === tabataCycles) {
-                            setCurrentTabataCycle(1);
-                        } else {
-                            setCurrentTabataCycle(prevCycle => prevCycle + 1);
-                        }
-                    } else {
-                        // Si estamos en el último ciclo y es un ejercicio, simplemente detenemos el temporizador
-                        setIsActive(false);
-                    }
-                } else if (isResting) {
-                    if (soundEnabled) start.play();
-                    setCurrentCycle(prevCycle => prevCycle + 1);
-                    setIsResting(false);
-                    setCurrentTime(workTime);
-                } else {
-                    if (soundEnabled) start.play();
-                    setIsResting(true);
-                    setCurrentTime(restTime);
-                }
+              // Si estamos en el último ciclo y es un ejercicio, verificamos las rondas de Tabata
+              if (currentTabataCycle < tabataCycles) {
+                // Si no es la última ronda de Tabata, inicia un descanso
+                if (soundEnabled) start.play();
+                setIsResting(true);
+                setCurrentTime(restTime);
+              } else {
+                // Si es la última ronda de Tabata, detén el temporizador
+                setIsActive(false);
+                finish.play();
+              }
             }
-        }, 1000);
+          } else if (isResting) {
+            if (soundEnabled) start.play();
+            setCurrentCycle((prevCycle) => prevCycle + 1);
+            setIsResting(false);
+            setCurrentTime(workTime);
+          } else {
+            if (soundEnabled) start.play();
+            setIsResting(true);
+            setCurrentTime(restTime);
+          }
+        }
+      }, 1000);
     }
 
     return () => clearInterval(interval);
-}, [isActive, isCountdownActive, countdownTime, currentTime, currentCycle, isResting, workTime, restTime, totalCycles, soundEnabled, tabataCycles, currentTabataCycle]);
-
-
-
+  }, [
+    isActive,
+    isCountdownActive,
+    countdownTime,
+    currentTime,
+    currentCycle,
+    isResting,
+    workTime,
+    restTime,
+    totalCycles,
+    soundEnabled,
+    tabataCycles,
+    currentTabataCycle,
+  ]);
 
   function startTimer() {
     setIsCountdownActive(true);
@@ -109,7 +136,13 @@ function TabataTimer() {
     setIsConfigOpen(!isConfigOpen);
   }
 
-  function ProgressBar({ children, currentTime, totalTime, isResting, isCountdown }) {
+  function ProgressBar({
+    children,
+    currentTime,
+    totalTime,
+    isResting,
+    isCountdown,
+  }) {
     const percentage = 100 - (currentTime / totalTime) * 100;
     const progressBarClass = isCountdown
       ? "countdown"
@@ -147,7 +180,7 @@ function TabataTimer() {
       <div className="controls">
         {!isActive ? (
           <button className="start-button" onClick={start}>
-            <FontAwesomeIcon className="textIcon"  icon={faPlay} />  Iniciar
+            <FontAwesomeIcon className="textIcon" icon={faPlay} /> Iniciar
           </button>
         ) : (
           <button className="btnPause" onClick={pause}>
@@ -155,14 +188,26 @@ function TabataTimer() {
           </button>
         )}
         <button className="reset-button" onClick={reset}>
-          <FontAwesomeIcon className="textIcon" icon={faArrowsSpin} /> 
+          <FontAwesomeIcon className="textIcon" icon={faArrowsSpin} />
           Reiniciar
         </button>
       </div>
     );
   }
 
-  function ConfigPanel({ workTime, setWorkTime, restTime, setRestTime, totalCycles, setTotalCycles, soundEnabled, setSoundEnabled, tabataCycles, setTabataCycles, toggleConfig }) {
+  function ConfigPanel({
+    workTime,
+    setWorkTime,
+    restTime,
+    setRestTime,
+    totalCycles,
+    setTotalCycles,
+    soundEnabled,
+    setSoundEnabled,
+    tabataCycles,
+    setTabataCycles,
+    toggleConfig,
+  }) {
     return (
       <div className="config-container">
         <label className="lbl">
@@ -174,7 +219,7 @@ function TabataTimer() {
             onBlur={(e) => setWorkTime(Number(e.target.value))}
           />
         </label>
-        <label className="lbl">        
+        <label className="lbl">
           Descanso
           <input
             className="inputConfig"
@@ -183,7 +228,7 @@ function TabataTimer() {
             onBlur={(e) => setRestTime(Number(e.target.value))}
           />
         </label>
-        <label className="lbl">        
+        <label className="lbl">
           Rondas
           <input
             className="inputConfig"
@@ -192,7 +237,7 @@ function TabataTimer() {
             onBlur={(e) => setTotalCycles(Number(e.target.value))}
           />
         </label>
-        <label className="lbl">        
+        <label className="lbl">
           Ciclos Tabata
           <input
             className="inputConfig"
@@ -201,12 +246,18 @@ function TabataTimer() {
             onBlur={(e) => setTabataCycles(Number(e.target.value))}
           />
         </label>
-        <button className="soundBtn" onClick={() => setSoundEnabled(!soundEnabled)}>
-          <FontAwesomeIcon className="textIcon" icon={soundEnabled ? faVolumeUp : faVolumeMute} />
+        <button
+          className="soundBtn"
+          onClick={() => setSoundEnabled(!soundEnabled)}
+        >
+          <FontAwesomeIcon
+            className="textIcon"
+            icon={soundEnabled ? faVolumeUp : faVolumeMute}
+          />
           {soundEnabled ? "Desactivar Sonido" : "Activar Sonido"}
         </button>
         <button className="configBtn" onClick={toggleConfig}>
-          <FontAwesomeIcon className="textIcon"  icon={faGear} />
+          <FontAwesomeIcon className="textIcon" icon={faGear} />
           Guardar
         </button>
       </div>
@@ -238,7 +289,7 @@ function TabataTimer() {
   return (
     <ProgressBar
       currentTime={isCountdownActive ? countdownTime : currentTime}
-      totalTime={isCountdownActive ? 3 : (isResting ? restTime : workTime)}
+      totalTime={isCountdownActive ? 3 : isResting ? restTime : workTime}
       isResting={isResting}
       isCountdown={isCountdownActive}
     >
@@ -262,7 +313,7 @@ function TabataTimer() {
       />
       {!isConfigOpen && (
         <button className="configBtn" onClick={toggleConfig}>
-          <FontAwesomeIcon className="textIcon"  icon={faGear} />
+          <FontAwesomeIcon className="textIcon" icon={faGear} />
           Configurar
         </button>
       )}
