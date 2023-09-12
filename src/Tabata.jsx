@@ -289,7 +289,7 @@ function TabataTimer() {
   return (
     <ProgressBar
       currentTime={isCountdownActive ? countdownTime : currentTime}
-      totalTime={isCountdownActive ? 3 : isResting ? restTime : workTime}
+      totalTime={isCountdownActive ? 10 : isResting ? restTime : workTime}
       isResting={isResting}
       isCountdown={isCountdownActive}
     >
