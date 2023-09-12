@@ -19,7 +19,12 @@ function TabataTimer() {
   const [restTime, setRestTime] = useState(10);
   const [totalCycles, setTotalCycles] = useState(8);
   const [soundEnabled, setSoundEnabled] = useState(true);
-  
+
+  // Estados para ciclos Tabata
+  const [tabataCycles, setTabataCycles] = useState(1);
+  const [currentTabataCycle, setCurrentTabataCycle] = useState(1);
+  const [tempTabataCycles, setTempTabataCycles] = useState(1);
+
   const ding = new Audio(dingSound);
   const start = new Audio(startSound);
 
@@ -51,10 +56,19 @@ function TabataTimer() {
         } else {
           if (currentCycle === totalCycles && isResting) {
             if (soundEnabled) start.play();
-            setIsActive(false);
-            setCurrentCycle(1);
-            setIsResting(false);
-            setCurrentTime(workTime);
+
+            if (currentTabataCycle === tabataCycles) {
+              setIsActive(false);
+              setCurrentCycle(1);
+              setIsResting(false);
+              setCurrentTime(workTime);
+              setCurrentTabataCycle(1);
+            } else {
+              setCurrentTabataCycle(prevCycle => prevCycle + 1);
+              setCurrentCycle(1);
+              setIsResting(false);
+              setCurrentTime(workTime);
+            }
           } else if (isResting) {
             if (soundEnabled) start.play();
             setCurrentCycle(prevCycle => prevCycle + 1);
@@ -70,7 +84,7 @@ function TabataTimer() {
     }
 
     return () => clearInterval(interval);
-  }, [isActive, isCountdownActive, countdownTime, currentTime, currentCycle, isResting, workTime, restTime, totalCycles, soundEnabled]);
+  }, [isActive, isCountdownActive, countdownTime, currentTime, currentCycle, isResting, workTime, restTime, totalCycles, soundEnabled, tabataCycles, currentTabataCycle]);
 
   function startTimer() {
     setIsCountdownActive(true);
@@ -86,6 +100,7 @@ function TabataTimer() {
       setRestTime(tempRestTime);
       setTotalCycles(tempTotalCycles);
       setCurrentTime(tempWorkTime);
+      setTabataCycles(tempTabataCycles);
     }
     setIsConfigOpen(!isConfigOpen);
   }
@@ -105,6 +120,113 @@ function TabataTimer() {
           style={{ width: `${percentage}%` }}
         />
         <div className="tabata-content">{children}</div>
+      </div>
+    );
+  }
+
+  function Timer({ time, isResting, cycle, totalCycles }) {
+    return (
+      <div className="timer">
+        <h2 className={isResting ? "resting" : "working"}>
+          {isResting ? "Descanso" : "Ejercicio"}
+        </h2>
+        <p>
+          {cycle} de {totalCycles}
+        </p>
+        <p className="segs">{time} </p>
+      </div>
+    );
+  }
+
+  function Controls({ isActive, start, pause, reset }) {
+    return (
+      <div className="controls">
+        {!isActive ? (
+          <button className="start-button" onClick={start}>
+            <FontAwesomeIcon className="textIcon"  icon={faPlay} />  Iniciar
+          </button>
+        ) : (
+          <button className="btnPause" onClick={pause}>
+            Pausar
+          </button>
+        )}
+        <button className="reset-button" onClick={reset}>
+          <FontAwesomeIcon className="textIcon" icon={faArrowsSpin} /> 
+          Reiniciar
+        </button>
+      </div>
+    );
+  }
+
+  function ConfigPanel({ workTime, setWorkTime, restTime, setRestTime, totalCycles, setTotalCycles, soundEnabled, setSoundEnabled, tabataCycles, setTabataCycles, toggleConfig }) {
+    return (
+      <div className="config-container">
+        <label className="lbl">
+          Ejercicio
+          <input
+            className="inputConfig"
+            type="number"
+            defaultValue={workTime}
+            onBlur={(e) => setWorkTime(Number(e.target.value))}
+          />
+        </label>
+        <label className="lbl">        
+          Descanso
+          <input
+            className="inputConfig"
+            type="number"
+            defaultValue={restTime}
+            onBlur={(e) => setRestTime(Number(e.target.value))}
+          />
+        </label>
+        <label className="lbl">        
+          Rondas
+          <input
+            className="inputConfig"
+            type="number"
+            defaultValue={totalCycles}
+            onBlur={(e) => setTotalCycles(Number(e.target.value))}
+          />
+        </label>
+        <label className="lbl">        
+          Ciclos Tabata
+          <input
+            className="inputConfig"
+            type="number"
+            defaultValue={tabataCycles}
+            onBlur={(e) => setTabataCycles(Number(e.target.value))}
+          />
+        </label>
+        <button className="soundBtn" onClick={() => setSoundEnabled(!soundEnabled)}>
+          <FontAwesomeIcon className="textIcon" icon={soundEnabled ? faVolumeUp : faVolumeMute} />
+          {soundEnabled ? "Desactivar Sonido" : "Activar Sonido"}
+        </button>
+        <button className="configBtn" onClick={toggleConfig}>
+          <FontAwesomeIcon className="textIcon"  icon={faGear} />
+          Guardar
+        </button>
+      </div>
+    );
+  }
+
+  function FullScreenToggle() {
+    const [isFullScreen, setIsFullScreen] = useState(false);
+
+    const toggleFullScreen = () => {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+        setIsFullScreen(true);
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+          setIsFullScreen(false);
+        }
+      }
+    };
+
+    return (
+      <div className="fullscreen-icon" onClick={toggleFullScreen}>
+        {isFullScreen ? "✖️" : "➕"}
       </div>
     );
   }
@@ -131,6 +253,7 @@ function TabataTimer() {
           setCurrentTime(workTime);
           setCurrentCycle(1);
           setIsResting(false);
+          setCurrentTabataCycle(1);
         }}
       />
       {!isConfigOpen && (
@@ -149,110 +272,13 @@ function TabataTimer() {
           setTotalCycles={setTempTotalCycles}
           soundEnabled={soundEnabled}
           setSoundEnabled={setSoundEnabled}
-          toggleConfig={toggleConfig}  // Pasamos la función toggleConfig como prop
+          tabataCycles={tempTabataCycles}
+          setTabataCycles={setTempTabataCycles}
+          toggleConfig={toggleConfig}
         />
       )}
       <FullScreenToggle />
     </ProgressBar>
-  );
-}
-
-function Timer({ time, isResting, cycle, totalCycles }) {
-  return (
-    <div className="timer">
-      <h2 className={isResting ? "resting" : "working"}>
-        {isResting ? "Descanso" : "Ejercicio"}
-      </h2>
-      <p>
-        {cycle} de {totalCycles}
-      </p>
-      <p className="segs">{time} </p>
-    </div>
-  );
-}
-
-function Controls({ isActive, start, pause, reset }) {
-  return (
-    <div className="controls">
-      {!isActive ? (
-        <button className="start-button" onClick={start}>
-          <FontAwesomeIcon className="textIcon"  icon={faPlay} />  Iniciar
-        </button>
-      ) : (
-        <button className="btnPause" onClick={pause}>
-          Pausar
-        </button>
-      )}
-      <button className="reset-button" onClick={reset}>
-        <FontAwesomeIcon className="textIcon" icon={faArrowsSpin} /> 
-        Reiniciar
-      </button>
-    </div>
-  );
-}
-
-function ConfigPanel({ workTime, setWorkTime, restTime, setRestTime, totalCycles, setTotalCycles, soundEnabled, setSoundEnabled, toggleConfig }) {
-    return (
-      <div className="config-container">
-        <label className="lbl">
-          Ejercicio
-          <input
-            className="inputConfig"
-            type="number"
-            defaultValue={workTime}
-            onBlur={(e) => setWorkTime(Number(e.target.value))}
-          />
-        </label>
-        <label className="lbl">        
-        Descanso
-          <input
-            className="inputConfig"
-            type="number"
-            defaultValue={restTime}
-            onBlur={(e) => setRestTime(Number(e.target.value))}
-          />
-        </label>
-        <label className="lbl">        
-        Ciclos
-          <input
-            className="inputConfig"
-            type="number"
-            defaultValue={totalCycles}
-            onBlur={(e) => setTotalCycles(Number(e.target.value))}
-          />
-        </label>
-        <button className="soundBtn" onClick={() => setSoundEnabled(!soundEnabled)}>
-          <FontAwesomeIcon className="textIcon" icon={soundEnabled ? faVolumeUp : faVolumeMute} />
-          {soundEnabled ? "Desactivar Sonido" : "Activar Sonido"}
-        </button>
-        {/* Aquí movimos el botón de guardar dentro del menú de configuración */}
-        <button className="configBtn" onClick={toggleConfig}>
-          <FontAwesomeIcon className="textIcon"  icon={faGear} />
-          Guardar
-        </button>
-      </div>
-    );
-  }
-
-function FullScreenToggle() {
-  const [isFullScreen, setIsFullScreen] = useState(false);
-
-  const toggleFullScreen = () => {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen();
-      setIsFullScreen(true);
-    } else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-        setIsFullScreen(false);
-      }
-    }
-  };
-
-  return (
-    <div className="fullscreen-icon" onClick={toggleFullScreen}>
-      {isFullScreen ? "✖️" : "➕"}
-    </div>
   );
 }
 
