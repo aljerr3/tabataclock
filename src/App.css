@@ -56,18 +56,19 @@
   color: black;
 }
 
-.btnPause, .reset-button, .start-button {
+.btnPause, .configBtn, .reset-button, .start-button {
   background-color: #370fe907;
   border: 2px solid #fff;
   border-radius: 5px;
   color: #fff;
   cursor: pointer;
-  font-size: 2rem;
-  padding: 0.6rem;
-  transition: background-color 0.25s;
   display: inline-block;
-  text-transform: uppercase;
   margin: 0.2em;
+  padding: 0.6rem;
+  transition: background-color .25s;
+  width: 10rem;
+  max-width: 90vw;   
+  font-size: 1rem;
 }
 
 .configBtn{
@@ -76,11 +77,10 @@
   border-radius: 5px;
   color: #fff;
   cursor: pointer;
-  font-size: 1.5rem;
+  font-size: 1rem;
   padding: 0.6rem;
   transition: background-color 0.25s;
   display: inline-block;
-  text-transform: uppercase;
   margin: 0.2em;
 }
 
@@ -197,8 +197,9 @@ label {
 .segs {
   color: #fff;
   font-size: 12em;
-  margin: -0.2em;
-  padding: 1rem;
+  margin: -2rem 1px 0 1px;
+  padding: 0.1rem;
+  text-shadow: 0.3rem 0.3rem black;
 }
 
 .fullscreen-icon {
