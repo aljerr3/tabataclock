@@ -39,52 +39,56 @@ function TabataTimer() {
         } else {
           setIsCountdownActive(false);
           setIsActive(true);
-          setCountdownTime(3);
+          setCountdownTime(10);
         }
       }, 1000);
-    } else if (isActive) {
-      interval = setInterval(() => {
-        if (currentTime > 0) {
-          setCurrentTime(prevTime => prevTime - 1);
+    }         else if (isActive) {
+        interval = setInterval(() => {
+            if (currentTime > 0) {
+                setCurrentTime(prevTime => prevTime - 1);
 
-          if (isResting && currentTime <= 3 && soundEnabled) {
-            ding.play();
-          }
-          if (!isResting  && currentTime <= 3 && soundEnabled) {
-            ding.play();
-          }
-        } else {
-          if (currentCycle === totalCycles && isResting) {
-            if (soundEnabled) start.play();
-
-            if (currentTabataCycle === tabataCycles) {
-              setIsActive(false);
-              setCurrentCycle(1);
-              setIsResting(false);
-              setCurrentTime(workTime);
-              setCurrentTabataCycle(1);
+                if (isResting && currentTime <= 3 && soundEnabled) {
+                    ding.play();
+                }
+                if (!isResting && currentTime <= 3 && soundEnabled) {
+                    ding.play();
+                }
             } else {
-              setCurrentTabataCycle(prevCycle => prevCycle + 1);
-              setCurrentCycle(1);
-              setIsResting(false);
-              setCurrentTime(workTime);
+                if (currentCycle === totalCycles) {
+                    if (isResting) {
+                        // Si estamos en el último ciclo y es un descanso, detenemos el temporizador
+                        setIsActive(false);
+                        setCurrentCycle(1);
+                        setIsResting(false);
+                        setCurrentTime(workTime);
+                        if (currentTabataCycle === tabataCycles) {
+                            setCurrentTabataCycle(1);
+                        } else {
+                            setCurrentTabataCycle(prevCycle => prevCycle + 1);
+                        }
+                    } else {
+                        // Si estamos en el último ciclo y es un ejercicio, simplemente detenemos el temporizador
+                        setIsActive(false);
+                    }
+                } else if (isResting) {
+                    if (soundEnabled) start.play();
+                    setCurrentCycle(prevCycle => prevCycle + 1);
+                    setIsResting(false);
+                    setCurrentTime(workTime);
+                } else {
+                    if (soundEnabled) start.play();
+                    setIsResting(true);
+                    setCurrentTime(restTime);
+                }
             }
-          } else if (isResting) {
-            if (soundEnabled) start.play();
-            setCurrentCycle(prevCycle => prevCycle + 1);
-            setIsResting(false);
-            setCurrentTime(workTime);
-          } else {
-            if (soundEnabled) start.play();
-            setIsResting(true);
-            setCurrentTime(restTime);
-          }
-        }
-      }, 1000);
+        }, 1000);
     }
 
     return () => clearInterval(interval);
-  }, [isActive, isCountdownActive, countdownTime, currentTime, currentCycle, isResting, workTime, restTime, totalCycles, soundEnabled, tabataCycles, currentTabataCycle]);
+}, [isActive, isCountdownActive, countdownTime, currentTime, currentCycle, isResting, workTime, restTime, totalCycles, soundEnabled, tabataCycles, currentTabataCycle]);
+
+
+
 
   function startTimer() {
     setIsCountdownActive(true);
