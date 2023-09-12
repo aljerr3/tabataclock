@@ -133,10 +133,12 @@ function TabataTimer() {
           setIsResting(false);
         }}
       />
-      <button className="configBtn" onClick={toggleConfig}>
-        <FontAwesomeIcon className="textIcon"  icon={faGear} />
-        {isConfigOpen ? "Guardar" : "Configurar"}
-      </button>
+      {!isConfigOpen && (
+        <button className="configBtn" onClick={toggleConfig}>
+          <FontAwesomeIcon className="textIcon"  icon={faGear} />
+          Configurar
+        </button>
+      )}
       {isConfigOpen && (
         <ConfigPanel
           workTime={tempWorkTime}
@@ -147,6 +149,7 @@ function TabataTimer() {
           setTotalCycles={setTempTotalCycles}
           soundEnabled={soundEnabled}
           setSoundEnabled={setSoundEnabled}
+          toggleConfig={toggleConfig}  // Pasamos la función toggleConfig como prop
         />
       )}
       <FullScreenToggle />
@@ -188,43 +191,48 @@ function Controls({ isActive, start, pause, reset }) {
   );
 }
 
-function ConfigPanel({ workTime, setWorkTime, restTime, setRestTime, totalCycles, setTotalCycles, soundEnabled, setSoundEnabled }) {
-  return (
-    <div className="config-container">
-      <label className="lbl">
-        Ejercicio
-        <input
-          className="inputConfig"
-          type="number"
-          defaultValue={workTime}
-          onBlur={(e) => setWorkTime(Number(e.target.value))}
-        />
-      </label>
-      <label className="lbl">        
-      Descanso
-        <input
-          className="inputConfig"
-          type="number"
-          defaultValue={restTime}
-          onBlur={(e) => setRestTime(Number(e.target.value))}
-        />
-      </label>
-      <label className="lbl">        
-      Ciclos
-        <input
-          className="inputConfig"
-          type="number"
-          defaultValue={totalCycles}
-          onBlur={(e) => setTotalCycles(Number(e.target.value))}
-        />
-      </label>
-      <button className="soundBtn" onClick={() => setSoundEnabled(!soundEnabled)}>
-        <FontAwesomeIcon className="textIcon" icon={soundEnabled ? faVolumeUp : faVolumeMute} />
-        {soundEnabled ? "Desactivar Sonido" : "Activar Sonido"}
-      </button>
-    </div>
-  );
-}
+function ConfigPanel({ workTime, setWorkTime, restTime, setRestTime, totalCycles, setTotalCycles, soundEnabled, setSoundEnabled, toggleConfig }) {
+    return (
+      <div className="config-container">
+        <label className="lbl">
+          Ejercicio
+          <input
+            className="inputConfig"
+            type="number"
+            defaultValue={workTime}
+            onBlur={(e) => setWorkTime(Number(e.target.value))}
+          />
+        </label>
+        <label className="lbl">        
+        Descanso
+          <input
+            className="inputConfig"
+            type="number"
+            defaultValue={restTime}
+            onBlur={(e) => setRestTime(Number(e.target.value))}
+          />
+        </label>
+        <label className="lbl">        
+        Ciclos
+          <input
+            className="inputConfig"
+            type="number"
+            defaultValue={totalCycles}
+            onBlur={(e) => setTotalCycles(Number(e.target.value))}
+          />
+        </label>
+        <button className="soundBtn" onClick={() => setSoundEnabled(!soundEnabled)}>
+          <FontAwesomeIcon className="textIcon" icon={soundEnabled ? faVolumeUp : faVolumeMute} />
+          {soundEnabled ? "Desactivar Sonido" : "Activar Sonido"}
+        </button>
+        {/* Aquí movimos el botón de guardar dentro del menú de configuración */}
+        <button className="configBtn" onClick={toggleConfig}>
+          <FontAwesomeIcon className="textIcon"  icon={faGear} />
+          Guardar
+        </button>
+      </div>
+    );
+  }
 
 function FullScreenToggle() {
   const [isFullScreen, setIsFullScreen] = useState(false);
