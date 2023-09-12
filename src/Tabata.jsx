@@ -134,7 +134,7 @@ function TabataTimer() {
         }}
       />
       <button className="configBtn" onClick={toggleConfig}>
-        <FontAwesomeIcon icon={faGear} />
+        <FontAwesomeIcon className="textIcon"  icon={faGear} />
         {isConfigOpen ? "Guardar" : "Configurar"}
       </button>
       {isConfigOpen && (
@@ -173,7 +173,7 @@ function Controls({ isActive, start, pause, reset }) {
     <div className="controls">
       {!isActive ? (
         <button className="start-button" onClick={start}>
-          <FontAwesomeIcon icon={faPlay} />  Iniciar
+          <FontAwesomeIcon className="textIcon"  icon={faPlay} />  Iniciar
         </button>
       ) : (
         <button className="btnPause" onClick={pause}>
@@ -181,7 +181,7 @@ function Controls({ isActive, start, pause, reset }) {
         </button>
       )}
       <button className="reset-button" onClick={reset}>
-        <FontAwesomeIcon icon={faArrowsSpin} /> 
+        <FontAwesomeIcon className="textIcon" icon={faArrowsSpin} /> 
         Reiniciar
       </button>
     </div>

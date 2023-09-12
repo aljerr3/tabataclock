@@ -103,6 +103,10 @@
   background-color: #B4CED9;
 }
 
+.textIcon{
+  margin-right: calc(100vh/90);
+  color: white;
+}
 
 .btnPause:visited, .configBtn:visited, .reset-button:visited, .start-button:visited {
   background-color: #370fe907;
