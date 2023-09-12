@@ -219,7 +219,7 @@ function ConfigPanel({ workTime, setWorkTime, restTime, setRestTime, totalCycles
         />
       </label>
       <button className="soundBtn" onClick={() => setSoundEnabled(!soundEnabled)}>
-        <FontAwesomeIcon icon={soundEnabled ? faVolumeUp : faVolumeMute} />
+        <FontAwesomeIcon className="textIcon" icon={soundEnabled ? faVolumeUp : faVolumeMute} />
         {soundEnabled ? "Desactivar Sonido" : "Activar Sonido"}
       </button>
     </div>
