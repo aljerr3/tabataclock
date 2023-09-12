@@ -103,6 +103,21 @@
   background-color: #B4CED9;
 }
 
+
+.btnPause:visited, .configBtn:visited, .reset-button:visited, .start-button:visited {
+  background-color: #370fe907;
+  border: 2px solid #fff;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  margin: 0.2em;
+  padding: 0.6rem;
+  transition: background-color .25s;
+  width: 10rem;
+  max-width: 90vw;   
+}
+
 body, html {
   height: 100%;
   margin: 0;
