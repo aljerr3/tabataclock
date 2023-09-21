@@ -10,6 +10,7 @@ import {
 import dingSound from "./resources/ding.mp3";
 import startSound from "./resources/start.mp3";
 import finishSound from "./resources/finish.mp3";
+import { Helmet } from "react-helmet";
 
 function TabataTimer() {
   const [currentTime, setCurrentTime] = useState(20);
@@ -145,9 +146,19 @@ function TabataTimer() {
     setIsConfigOpen(!isConfigOpen);
   }
 
-  function ProgressBar({ children, currentTime, totalTime, isResting, isCountdown }) {
+  function ProgressBar({
+    children,
+    currentTime,
+    totalTime,
+    isResting,
+    isCountdown,
+  }) {
     const percentage = 100 - (currentTime / totalTime) * 100;
-    const progressBarClass = isCountdown ? "countdown" : isResting ? "resting" : "working";
+    const progressBarClass = isCountdown
+      ? "countdown"
+      : isResting
+      ? "resting"
+      : "working";
     return (
       <div className="tabata-container">
         <div
@@ -162,7 +173,9 @@ function TabataTimer() {
   function Timer({ time, isResting, cycle, totalCycles }) {
     return (
       <div className="timer">
-        <h2 className={isResting ? "resting" : "working"}>{isResting ? "Descanso" : "Ejercicio"}</h2>
+        <h2 className={isResting ? "resting" : "working"}>
+          {isResting ? "Descanso" : "Ejercicio"}
+        </h2>
         <p>
           {cycle} de {totalCycles}
         </p>
@@ -242,8 +255,14 @@ function TabataTimer() {
             onBlur={(e) => setTabataCycles(Number(e.target.value))}
           />
         </label>
-        <button className="soundBtn" onClick={() => setSoundEnabled(!soundEnabled)}>
-          <FontAwesomeIcon className="textIcon" icon={soundEnabled ? faVolumeUp : faVolumeMute} />
+        <button
+          className="soundBtn"
+          onClick={() => setSoundEnabled(!soundEnabled)}
+        >
+          <FontAwesomeIcon
+            className="textIcon"
+            icon={soundEnabled ? faVolumeUp : faVolumeMute}
+          />
           {soundEnabled ? "Desactivar Sonido" : "Activar Sonido"}
         </button>
         <button className="configBtn" onClick={toggleConfig}>
@@ -283,6 +302,30 @@ function TabataTimer() {
       isResting={isResting}
       isCountdown={isCountdownActive}
     >
+      <div>
+        <Helmet>
+          <title>Temporizador Tabata</title>
+          <meta
+            name="description"
+            content="Temporizador Tabata"
+          />
+          <meta name="keywords" content="Tabata, Crossfit, deporte, ejercicio, cronómetro tabata, temporizador tabata" />
+          <meta name="author" content="Alejandro Rodríguez" />
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+          />
+          <meta
+            property="og:title"
+            content="Temporizador Tabata"
+          />
+          <meta
+            property="og:description"
+            content="Temporizador Tabata"
+          />
+        </Helmet>
+      </div>
+
       <Timer
         time={currentTime}
         isResting={isResting}
