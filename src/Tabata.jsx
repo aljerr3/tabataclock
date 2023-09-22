@@ -146,6 +146,10 @@ function TabataTimer() {
     setIsConfigOpen(!isConfigOpen);
   }
 
+  function cancelConfig() {
+    setIsConfigOpen(!isConfigOpen);
+  }
+
   function ProgressBar({
     children,
     currentTime,
@@ -268,6 +272,10 @@ function TabataTimer() {
         <button className="configBtn" onClick={toggleConfig}>
           <FontAwesomeIcon className="textIcon" icon={faGear} />
           Guardar
+        </button>
+        <button className="configBtn" onClick={cancelConfig}>
+          <FontAwesomeIcon className="textIcon" icon={faGear} />
+          Cancelar
         </button>
       </div>
     );
