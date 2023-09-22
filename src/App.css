@@ -39,10 +39,6 @@
   font-size: calc(100vh/60);
 }
 
-.start-button:hover {
-  background-color: darkgreen;
-}
-
 .reset-button:active, .btnPause:active, .start-button:active, .configBtn:active {
   color: black;
   background: #B4CED9;
@@ -50,7 +46,7 @@
   box-shadow: 0px -4px 0 0px #F2BC1B;
 }
 
-.reset-button:hover, .btnPause:hover, .start-button:hover, .configBtn:hover {
+.btnPause:hover, .start-button:hover, .configBtn:hover {
   background-color: #B4CED9;
   color: black;
 }
@@ -188,8 +184,54 @@ body, html {
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5); 
 }
 
-.lbl{
-  color: rgb(255, 255, 255);
+.lbl {
+    font-size: 2rem;
+    justify-self: baseline;
+    margin: 0.2rem;
+    position: relative;
+    color: #fff;
+    padding: 0.1rem;
+    align-self: center;
+}
+
+.inputConfig {
+    border: none;
+    border-radius: 5px;
+    float: left;
+    font-size: 1.3rem;
+    height: 2rem;
+    margin: 0.5rem;
+    width: 4rem;
+    text-align: center;
+}
+
+.tabata-content {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    z-index: 2;
+    overflow: auto;
+}
+
+.config-container {
+    align-items: center;
+    background-color: rgba(0,0,0,.932);
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0,0,0,.5);
+    display: grid;
+    height: 28rem;
+    justify-content: center;
+    left: 50%;
+    padding: 2rem 1rem 2rem 1rem;
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    width: 20rem;
+    z-index: 3;
+    justify-items: center;
 }
 
 .inputConfig{
