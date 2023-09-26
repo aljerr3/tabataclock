@@ -6,6 +6,8 @@ import {
   faGear,
   faVolumeUp,
   faVolumeMute,
+  faExpand,
+  faCompress
 } from "@fortawesome/free-solid-svg-icons";
 import dingSound from "./resources/ding.mp3";
 import startSound from "./resources/start.mp3";
@@ -274,7 +276,6 @@ function TabataTimer() {
           Guardar
         </button>
         <button className="configBtn" onClick={cancelConfig}>
-          <FontAwesomeIcon className="textIcon" icon={faGear} />
           Cancelar
         </button>
       </div>
@@ -298,7 +299,7 @@ function TabataTimer() {
 
     return (
       <div className="fullscreen-icon" onClick={toggleFullScreen}>
-        {isFullScreen ? "✖️" : "➕"}
+        {isFullScreen ? <FontAwesomeIcon icon={faCompress} style={{color: "#f5faff",}} /> : <FontAwesomeIcon icon={faExpand} style={{color: "#f0f5ff",}} />}
       </div>
     );
   }
@@ -312,12 +313,12 @@ function TabataTimer() {
     >
       <div>
         <Helmet>
-          <title>Temporizador Tabata</title>
+          <title>Timer Tabata</title>
           <meta
             name="description"
-            content="Temporizador Tabata"
+            content="Timer Tabata"
           />
-          <meta name="keywords" content="Tabata, Crossfit, deporte, ejercicio, cronómetro tabata, temporizador tabata" />
+          <meta name="keywords" content="Tabata, Crossfit, deporte, ejercicio, cronómetro tabata, temporizador tabata, timer tabata" />
           <meta name="author" content="Alejandro Rodríguez" />
           <meta
             name="viewport"
@@ -325,11 +326,11 @@ function TabataTimer() {
           />
           <meta
             property="og:title"
-            content="Temporizador Tabata"
+            content="Timer Tabata"
           />
           <meta
             property="og:description"
-            content="Temporizador Tabata"
+            content="Timer Tabata"
           />
         </Helmet>
       </div>
