@@ -182,9 +182,9 @@ function TabataTimer() {
         <h2 className={isResting ? "resting" : "working"}>
           {isResting ? "Descanso" : "Ejercicio"}
         </h2>
-        <p>
+        <h2>
           {cycle} de {totalCycles}
-        </p>
+        </h2>
         <p className="segs">{time} </p>
       </div>
     );
