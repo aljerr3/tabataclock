@@ -112,6 +112,9 @@ function TabataTimer() {
   ]);
 
   function startTimer() {
+        // Asegurarse de que la interacción del usuario inicie el audio
+        start.play().catch(e => console.log("No se pudo reproducir el audio inicialmente"));
+    
     if (!initialCountdownPlayed) {
       setIsCountdownActive(true);
     } else {
