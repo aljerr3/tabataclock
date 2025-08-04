@@ -569,11 +569,15 @@ body {
   
   .banner-products {
     gap: 4px;
+    flex-direction: row;
+    justify-content: space-around;
   }
   
   .product-item {
     padding: 4px 6px;
     min-width: 60px;
+    flex: 1;
+    max-width: 80px;
   }
   
   .product-icon {
@@ -592,12 +596,23 @@ body {
   }
   
   .banner-products {
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-around;
     align-items: center;
   }
   
   .product-item {
-    width: 80%;
-    max-width: 160px;
+    width: auto;
+    max-width: 70px;
+    min-width: 50px;
+    padding: 3px 4px;
+  }
+  
+  .product-name {
+    font-size: 0.5rem;
+  }
+  
+  .product-icon {
+    font-size: 0.8rem;
   }
 }
