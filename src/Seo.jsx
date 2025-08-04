@@ -68,7 +68,7 @@ function Seo() {
 
         <p>
           <strong>Palabras clave relacionadas:</strong> timer tabata, reloj tabata, 
-          entrenamiento hiit, tabata online, ejercicio intervalico, alta intensidad, 
+          entrenamiento hiit, tabata online, ejercicio interválico, alta intensidad, 
           fitness, entrenamiento, tabata timer, hiit workout, protocolo tabata, 
           dr izumi tabata, entrenamiento cardiovascular, quema de grasa, 
           capacidad aeróbica, capacidad anaeróbica.
