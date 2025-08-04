@@ -21,7 +21,7 @@ function TabataTimer() {
   const [isActive, setIsActive] = useState(false);
   const [isCountdownActive, setIsCountdownActive] = useState(false);
   const [isResting, setIsResting] = useState(false);
-  const [isConfigOpen, setIsConfigOpen] = useState(true);
+  const [isConfigOpen, setIsConfigOpen] = useState(false);
   const [tempWorkTime, setTempWorkTime] = useState(20);
   const [tempRestTime, setTempRestTime] = useState(10);
   const [tempTotalCycles, setTempTotalCycles] = useState(8);
@@ -276,7 +276,7 @@ function TabataTimer() {
         </button>
         <button className="configBtn" onClick={toggleConfig}>
           <FontAwesomeIcon className="textIcon" icon={faGear} />
-          Guardar
+          Empezar
         </button>
         <button className="configBtn" onClick={cancelConfig}>
           Cancelar
@@ -303,6 +303,58 @@ function TabataTimer() {
     return (
       <div className="fullscreen-icon" onClick={toggleFullScreen}>
         {isFullScreen ? <FontAwesomeIcon icon={faCompress} style={{color: "#f5faff",}} /> : <FontAwesomeIcon icon={faExpand} style={{color: "#f0f5ff",}} />}
+      </div>
+    );
+  }
+
+  function AmazonBanner() {
+    return (
+      <div className="amazon-banner">
+        <div className="banner-content">
+          <div className="banner-text">
+            <h3>Equipamiento Fitness</h3>
+            <p>Productos recomendados para tu entrenamiento</p>
+          </div>
+          <div className="banner-products">
+            <a 
+              href="https://www.amazon.es/s?k=colchoneta+fitness&__mk_es_ES=%C3%85M%C3%85Z%C3%95N&crid=2V8XZ8KQZ8KQZ&sprefix=colchoneta+fitness%2Caps%2C89&ref=nb_sb_noss_2" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="product-link"
+            >
+              <div className="product-item">
+                <span className="product-icon">🧘‍♀️</span>
+                <span className="product-name">Colchonetas</span>
+              </div>
+            </a>
+            <a 
+              href="https://www.amazon.es/s?k=pesas+mano&__mk_es_ES=%C3%85M%C3%85Z%C3%95N&crid=2V8XZ8KQZ8KQZ&sprefix=pesas+mano%2Caps%2C89&ref=nb_sb_noss_2" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="product-link"
+            >
+              <div className="product-item">
+                <span className="product-icon">💪</span>
+                <span className="product-name">Pesas</span>
+              </div>
+            </a>
+            <a 
+              href="https://www.amazon.es/s?k=ropa+deportiva&__mk_es_ES=%C3%85M%C3%85Z%C3%95N&crid=2V8XZ8KQZ8KQZ&sprefix=ropa+deportiva%2Caps%2C89&ref=nb_sb_noss_2" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="product-link"
+            >
+              <div className="product-item">
+                <span className="product-icon">👕</span>
+                <span className="product-name">Ropa</span>
+              </div>
+            </a>
+          </div>
+          <div className="banner-footer">
+            <span className="amazon-logo">Amazon</span>
+            <span className="affiliate-text">enlaces afiliados</span>
+          </div>
+        </div>
       </div>
     );
   }
@@ -337,6 +389,8 @@ function TabataTimer() {
           />
         </Helmet>
       </div>
+
+      <AmazonBanner />
 
       <Timer
         time={currentTime}

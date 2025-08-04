@@ -1,6 +1,7 @@
 {
   "short_name": "Timer Tabata",
-  "name": "Timer Tabata",
+  "name": "Timer Tabata Online - Entrenamiento HIIT Gratuito",
+  "description": "Reloj Tabata online gratuito para entrenamiento HIIT. Timer profesional con 8 rondas de 30 segundos. Mejora tu capacidad aeróbica y anaeróbica.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -21,5 +22,17 @@
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "background_color": "#ffffff",
+  "orientation": "portrait",
+  "scope": "/",
+  "lang": "es",
+  "categories": ["health", "fitness", "sports", "lifestyle"],
+  "screenshots": [
+    {
+      "src": "logo512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ]
 }

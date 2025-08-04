@@ -1,4 +1,9 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow: /privado/
-Allow: /public/
+Allow: /
+
+# Sitemap location
+Sitemap: https://tabataclock.com/sitemap.xml
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
